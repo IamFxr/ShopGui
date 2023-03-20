@@ -9,7 +9,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 
-class command extends Command
+class ShopGuiCommand extends Command
 {
 public function __construct()
     {
