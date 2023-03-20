@@ -14,7 +14,7 @@ class command extends Command
 public function __construct()
     {
         parent::__construct('shopgui', 'open the shopgui!');
-}
+     }
  /**
      * @param CommandSender $sender
      * @param string $commandLabel
@@ -27,7 +27,7 @@ if (!isset($args[0])) {
 
 ShopGui::OpenShopFormat($sender);
 return;
-}
+       }
             
             switch ($args[0]) {
                 case "blocks":
@@ -47,5 +47,5 @@ case "food":
 ShopGui::OpenFoodShop($sender);
 break;
 
-}
-} 
+          }
+      } 
