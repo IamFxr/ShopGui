@@ -1,0 +1,5 @@
+name: ShopGUI
+author: SVega9848 & ShxdowSxnti
+main: ShopGUI\Main
+version: 1.0.0
+api: [4.0.0]
