@@ -1,35 +1,157 @@
 <?php
 
-declare(strict_types=1);
-
 namespace ShopGui;
 
-use muqsit\invmenu\InvMenu;
-use muqsit\invmenu\transaction\InvMenuTransaction;
-use muqsit\invmenu\transaction\InvMenuTransactionResult;
-use muqsit\invmenu\type\InvMenuTypeIds;
-use pocketmine\console\ConsoleCommandSender;
-use pocketmine\item\Item;
-use pocketmine\item\VanillaItems;
-use pocketmine\player\Player;
-use pocketmine\Server;
-use pocketmine\plugin\PluginBase;
-use pocketmine\utils\TextFormat;
+use Closure;
 
-class ShopGui extends PluginBase
-{
+
+
+use pocketmine\player\Player;
+
+
+
+use ShopGui\libs\muqsit\invmenu\InvMenu;
+
+use ShopGui\libs\muqsit\invmenu\type\InvMenuTypeIds;
+
+use ShopGui\libs\muqsit\invmenu\transaction\InvMenuTransaction;
+
+use ShopGui\libs\muqsit\invmenu\transaction\InvMenuTransactionResult;
+
+
+
+use pocketmine\block\VanillaBlocks;
+
+use pocketmine\item\VanillaItems;
+
+
+
+
+
+use ShopGui\PluginUtils;
+
+
+
+class ShopGui {
+
+
+
+    
+
+     
+
+    public function openShopFormat(Player $player): void{
+
+        $menu = InvMenu::create(InvMenuTypeIds::TYPE_CHEST);
+
+        $inv = $menu->getInventory();
+
+        $menu->setName("§l§gShopGui"));
+
+        $menu->setListener(Closure::fromCallable([$this, "ShopFormat"]));
+
+
+
+        
+
+        for($i = 0;$i < 27;$i++){
+
+            if(!in_array($i, [11, 12, 13])){
+
+                $inv->setItem($i, VanillaBlocks::IRON_BARS()->asItem()->setCustomName("§l§gVentrix§r§fMc"));
+
+            }
+
+        }
+
+
+
+        $inv->setItem(11, VanillaItems::DIAMOND_CHESTPLATE()->setCustomName("§lTienda de Armaduras")->setLore(["§rClick para ir a la tienda de armaduras")]);
+
+        $inv->setItem(12, VanillaItems::STONE()->setCustomName("§lTienda de Bloques")->setLore(["§rClick para ir a la tienda de Bloques")]);
+
+        $inv->setItem(13, VanillaItems::COOKED_CHICKEN()->setCustomName("§lTienda de Comida")->setLore(["§rClick para ir a la tienda de Comida")]);
+        
+
+        $menu->send($player);
+
     }
 
-    public function onEnable(): void
-    {
-		$this->eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI")
-$this->getLogger()->info("Plugin Enable") 
+
+
+    /**
+
+     * @param InvMenuTransaction $transaction
+
+     * @return InvMenuTransactionResult
+
+     */
+
+    public function getShop(InvMenuTransaction $transaction): InvMenuTransactionResult{
+
+        $player = $transaction->getPlayer();
+
+        $action = $transaction->getAction();
+
+        switch($action->getSlot()){
+
+            case 11: 
+
+                if($player->hasPermission("shop.perm")){
+
+                    $this->OpenEquipmentShop($player);
+
+                    PluginUtils::PlaySound($player, "random.click", 1, 1);
+
+                
+
+                    $player->removeCurrentWindow();
+
+                    
+
+                }
+
+            break;
+
+
+
+            case 12: 
+
+                if($player->hasPermission("shop.perm")){
+
+                    $this->OpenBlockShop($player);
+
+                    PluginUtils::PlaySound($player, "random.click", 1, 1);
+
+                }
+                
+
+            break;
+
+
+
+            case 13: 
+
+                if($player->hasPermission("shop.perm")){
+
+                    $this->OpenFoodShop($player);
+
+                    PluginUtils::PlaySound($player, "random.click", 1, 1);
+
+             }
+
+            break;
+
 }
 
-public function openShopFormat(Player $player): void
-    {
-        $menu = InvMenu::create(InvMenuTypeIds::TYPE_DOUBLE_CHEST);
-$menu->setListener(function(InvMenuTransaction $transaction): InvMenuTransactionResult {
-            $player = $transaction->getPlayer();
-            $item = $transaction->getItemClicked();
-} 
+         
+              
+        
+
+
+
+        return $transaction->discard();
+
+    }
+
+}
