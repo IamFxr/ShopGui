@@ -10,13 +10,13 @@ use pocketmine\player\Player;
 
 
 
-use ShopGui\libs\muqsit\invmenu\InvMenu;
+use muqsit\invmenu\InvMenu;
 
-use ShopGui\libs\muqsit\invmenu\type\InvMenuTypeIds;
+use muqsit\invmenu\type\InvMenuTypeIds;
 
-use ShopGui\libs\muqsit\invmenu\transaction\InvMenuTransaction;
+use muqsit\invmenu\transaction\InvMenuTransaction;
 
-use ShopGui\libs\muqsit\invmenu\transaction\InvMenuTransactionResult;
+use muqsit\invmenu\transaction\InvMenuTransactionResult;
 
 
 
@@ -46,7 +46,7 @@ class ShopGui {
 
         $inv = $menu->getInventory();
 
-        $menu->setName("§l§gShopGui"));
+        $menu->setName("§l§gShopGui");
 
         $menu->setListener(Closure::fromCallable([$this, "ShopFormat"]));
 
@@ -66,11 +66,11 @@ class ShopGui {
 
 
 
-        $inv->setItem(11, VanillaItems::DIAMOND_CHESTPLATE()->setCustomName("§lTienda de Armaduras")->setLore(["§rClick para ir a la tienda de armaduras")]);
+        $inv->setItem(11, VanillaItems::DIAMOND_CHESTPLATE()->setCustomName("§lTienda de Armaduras")->setLore(["§rClick para ir a la tienda de armaduras"]));
 
-        $inv->setItem(12, VanillaItems::STONE()->setCustomName("§lTienda de Bloques")->setLore(["§rClick para ir a la tienda de Bloques")]);
+        $inv->setItem(12, VanillaItems::STONE()->setCustomName("§lTienda de Bloques")->setLore(["§rClick para ir a la tienda de Bloques"]));
 
-        $inv->setItem(13, VanillaItems::COOKED_CHICKEN()->setCustomName("§lTienda de Comida")->setLore(["§rClick para ir a la tienda de Comida")]);
+        $inv->setItem(13, VanillaItems::COOKED_CHICKEN()->setCustomName("§lTienda de Comida")->setLore(["§rClick para ir a la tienda de Comida"]));
         
 
         $menu->send($player);
